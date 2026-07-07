@@ -1,0 +1,104 @@
+name: PR Verification Pipeline
+on:
+  pull_request:
+    branches: [ "main" ]
+    types:
+      - opened
+  
+  workflow_dispatch:
+jobs:
+   Build:
+    name: Build project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Projects checkout
+        uses: actions/checkout@v4
+
+      - name: Node installation
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: CLI installation
+        run: |
+          npm install -g @apistudio/apim-cli
+
+      - name: Build project
+        run: |
+          apic build -a -l .
+ 
+   Lint:
+    name: Lint project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Projects checkout
+        uses: actions/checkout@v4
+
+      - name: Node installation
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+
+      - name: CLI installation
+        run: |
+          npm install -g @apistudio/apim-cli
+
+      - name: Lint project
+        run: |
+          apic lint -a -l .        
+          
+   Test:
+    name: Run Functional tests
+    runs-on: ubuntu-latest
+    needs: [Lint]
+    steps:
+      - name: Check out projects
+        uses: actions/checkout@v4
+
+      - name: Node installation
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          
+      - name: CLI installation
+        run: |
+          npm install -g @apistudio/apim-cli
+          
+      - name: Run tests on the API Studio project
+        run: |
+         apic test -a -l . 
+
+   Performance:
+    name: Run performance tests
+    runs-on: ubuntu-latest
+    needs: [Build]
+    steps:
+      - name: Check out projects
+        uses: actions/checkout@v4
+
+      - name: Run local k6 test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: "./Tests/performance/Loadtest.js"
+
+   Deploy:
+    name: Deploy API Studio project
+    runs-on: ubuntu-latest
+    needs: [Build, Test,Performance]
+    if: success()
+    steps:
+      - name: Check out projects
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: CLI installation
+        run: |
+          npm install -g @apistudio/apim-cli
+          
+      - name: Deploy API Studio project
+        run: |
+          wm apim deploy -l ./ --target ${{ secrets.Prod_Gateway_URL }} --username ${{ secrets.Prod_Gateway_Username }} --password ${{ secrets.Prod_Gateway_Password }} --overwrite --debug "Project Hydra"
