@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "air-temperature-demo": {
+      "id": "c8Qd1d0c",
+      "description": "Singapore Air Temperature API — NEA real-time weather data",
+      "tags": [
+        "environment",
+        "weather"
+      ],
+      "lastUpdated": 1783435467671
+    }
+  }
+}

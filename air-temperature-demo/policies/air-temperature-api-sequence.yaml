@@ -1,0 +1,14 @@
+kind: FreeFlowPolicySequence
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-api-sequence
+  version: '1'
+  namespace: air-temperature-demo
+  tags:
+    - environment
+    - weather
+spec:
+  main:
+    - $ref: 'air-temperature-demo:air-temperature-api-extract-identity:1'
+    - $ref: 'air-temperature-demo:air-temperature-api-authenticate:1'
+    - $ref: 'air-temperature-demo:air-temperature-api-invoke:1'

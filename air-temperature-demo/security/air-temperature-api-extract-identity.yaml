@@ -1,0 +1,18 @@
+kind: ExtractIdentity
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-api-extract-identity
+  version: '1'
+  namespace: air-temperature-demo
+  tags:
+    - environment
+    - weather
+spec:
+  credentialType:
+    apiKey:
+      clientId:
+        httpHeader:
+          name: X-IBM-Client-Id
+      clientSecret:
+        httpHeader:
+          name: X-IBM-Client-Secret
