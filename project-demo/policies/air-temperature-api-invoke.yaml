@@ -1,0 +1,18 @@
+kind: Invoke
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-api-invoke
+  version: '1'
+  namespace: project-demo
+  tags:
+    - environment
+    - weather
+spec:
+  endpoint:
+    http:
+      target:
+        url: "'https://sample-api.eu-west-a.apiconnect.automation.ibm.com/environment/air-temperature' & $relativeUrl(request)"
+        urlType: jsonata
+        timeout: 60
+        version: HTTP/1.1
+        tlsClientProfile: tls-client-profile-default:1.0.0

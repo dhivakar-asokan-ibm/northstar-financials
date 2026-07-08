@@ -1,0 +1,52 @@
+kind: MCPTools
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-mcp-tool-x7k2p
+  namespace: project-demo
+  version: 1
+  tags: []
+  description: >
+    Real-time air-temperature readings across Singapore, provided by the
+    National Environment Agency (NEA).
+spec:
+  tools:
+    - name: get_air-temperature
+      title: Get Air Temperature Readings
+      description: >
+        Returns the current (or recent) air temperature observations across
+        multiple stations in Singapore.
+
+        The dataset covers May 2016 to present.
+      inputSchema:
+        type: object
+        properties:
+          station_id:
+            type: string
+            description: The station identifier to filter by a specific station (optional)
+            example: S101
+            x-parameter-location: query
+          start_time:
+            type: string
+            format: date-time
+            description: ISO-8601 timestamp to filter readings from this time (optional)
+            example: '2025-11-11T00:00:00+08:00'
+            x-parameter-location: query
+          end_time:
+            type: string
+            format: date-time
+            description: ISO-8601 timestamp to filter readings up to this time (optional)
+            example: '2025-11-11T12:00:00+08:00'
+            x-parameter-location: query
+          X-IBM-Client-Id:
+            type: string
+            description: API key for authentication
+            x-parameter-location: header
+          X-IBM-Client-Secret:
+            type: string
+            description: API client secret for authentication
+            x-parameter-location: header
+      x-api-binding:
+        operationPath: /air-temperature
+        operationMethod: GET
+        api:
+          $path: ./air-temperature-spec.yml

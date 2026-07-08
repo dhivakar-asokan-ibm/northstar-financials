@@ -1,0 +1,22 @@
+kind: Invoke
+apiVersion: api.ibm.com/v1
+metadata:
+  name: invoke-x7k2p
+  namespace: project-demo
+  version: 1
+  tags: []
+  labels:
+    gatewayTypes:
+      - nano
+spec:
+  endpoint:
+    http:
+      target:
+        url: "'https://sample-api.eu-west-a.apiconnect.automation.ibm.com/environment' & $pathAndQuery()"
+        urlType: jsonata
+        tlsClientProfile: tls-client-profile-default:1.0.0
+        timeout: 30
+        persistentConnections: false
+        decompressResponse: true
+        followRedirects: false
+        chunkedUpload: false

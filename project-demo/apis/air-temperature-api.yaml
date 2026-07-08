@@ -1,0 +1,17 @@
+kind: API
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-api
+  version: '1'
+  namespace: project-demo
+  description: Singapore Air Temperature API — NEA real-time weather data
+  tags:
+    - environment
+    - weather
+spec:
+  api-spec:
+    $path: ../spec/air-temperature-api-openapi.yaml
+  uriSchemes:
+    $ref: 'project-demo:air-temperature-api-uri-schemes:1'
+  policy-sequence:
+    - $ref: 'project-demo:air-temperature-api-sequence:1'

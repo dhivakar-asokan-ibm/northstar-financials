@@ -14,6 +14,15 @@
       "description": "MCP server for Singapore Air Temperature API",
       "tags": [],
       "lastUpdated": 1783448861561
+    },
+    "project-demo": {
+      "id": "G8c2hkmk",
+      "description": "Singapore Air Temperature API proxy",
+      "tags": [
+        "environment",
+        "weather"
+      ],
+      "lastUpdated": 1783506674583
     }
   }
 }

@@ -1,0 +1,17 @@
+kind: MCPServer
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-mcp-server-x7k2p
+  namespace: project-demo
+  version: 1
+  tags: []
+spec:
+  title: Singapore Air Temperature API MCP Server
+  protocolVersion: V2025_11_25
+  policy-sequence:
+    - $ref: 'project-demo:project-demo-freeflowpolicysequence-x7k2p:1'
+  capabilities:
+    tools:
+      - $ref: 'project-demo:air-temperature-mcp-tool-x7k2p:1'
+  quota:
+    $ref: 'project-demo:project-demo-quota-x7k2p:1'

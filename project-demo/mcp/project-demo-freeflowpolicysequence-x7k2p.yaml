@@ -1,0 +1,15 @@
+kind: FreeFlowPolicySequence
+apiVersion: api.ibm.com/v1
+metadata:
+  name: project-demo-freeflowpolicysequence-x7k2p
+  namespace: project-demo
+  version: 1
+  tags: []
+  labels:
+    gatewayTypes:
+      - nano
+spec:
+  monitoring:
+    $ref: 'project-demo:telemetry-x7k2p:1'
+  main:
+    - $ref: 'project-demo:invoke-x7k2p:1'

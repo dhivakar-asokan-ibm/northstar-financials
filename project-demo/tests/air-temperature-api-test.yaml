@@ -1,0 +1,69 @@
+kind: test
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-api-test
+  namespace: project-demo
+  version: '1'
+  tags:
+    - environment
+    - weather
+spec:
+  api:
+    $endpoint: 'https://sample-api.eu-west-a.apiconnect.automation.ibm.com/environment'
+  environment:
+    $ref: 'project-demo:air-temperature-test-environment:1'
+  request:
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+        - key: X-IBM-Client-Id
+          value: ${client_id}
+        - key: X-IBM-Client-Secret
+          value: ${client_secret}
+      assertions:
+        - $ref: 'project-demo:200-air-temperature-response:1'
+
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+        - key: X-IBM-Client-Id
+          value: ${client_id}
+        - key: X-IBM-Client-Secret
+          value: ${client_secret}
+      parameters:
+        - key: station_id
+          value: S101
+          type: query
+      assertions:
+        - $ref: 'project-demo:200-air-temperature-response:1'
+
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+        - key: X-IBM-Client-Id
+          value: ${client_id}
+        - key: X-IBM-Client-Secret
+          value: ${client_secret}
+      parameters:
+        - key: start_time
+          value: '2025-11-11T00:00:00+08:00'
+          type: query
+        - key: end_time
+          value: '2025-11-11T12:00:00+08:00'
+          type: query
+      assertions:
+        - $ref: 'project-demo:200-air-temperature-response:1'
+
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+      assertions:
+        - $ref: 'project-demo:401-unauthorized:1'

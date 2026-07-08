@@ -1,0 +1,12 @@
+kind: Authenticate
+apiVersion: api.ibm.com/v1
+metadata:
+  name: air-temperature-api-authenticate
+  version: '1'
+  namespace: project-demo
+  tags:
+    - environment
+    - weather
+spec:
+  operation:
+    subscription: {}
