@@ -1,0 +1,44 @@
+kind: assertion
+apiVersion: api.ibm.com/v1
+metadata:
+  name: 200-air-temperature-response
+  namespace: singapore-air-temperature
+  version: '1.0'
+  tags:
+    - assertion
+spec:
+  - name: Validate response status code
+    key: responseStatus
+    value: 200
+    action: equals
+    stopOnFail: false
+  - name: Validate content type is JSON
+    key: responseHeaders.content-type
+    value: application/json
+    action: include
+    stopOnFail: false
+  - name: Validate response body has items array
+    key: responseBody
+    value: items
+    action: haveProperty
+    stopOnFail: false
+  - name: Validate response body has api_info object
+    key: responseBody
+    value: api_info
+    action: haveProperty
+    stopOnFail: false
+  - name: Validate api_info has status
+    key: responseBody.api_info
+    value: status
+    action: haveProperty
+    stopOnFail: false
+  - name: Validate api_info has version
+    key: responseBody.api_info
+    value: version
+    action: haveProperty
+    stopOnFail: false
+  - name: Validate response schema
+    key: responseBody
+    value: '{"type":"object","properties":{"items":{"type":"array"},"api_info":{"type":"object","required":["status","version"],"properties":{"status":{"type":"string"},"version":{"type":"string"}}}}}'
+    action: validateSchema
+    stopOnFail: false

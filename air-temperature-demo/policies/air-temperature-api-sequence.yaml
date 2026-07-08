@@ -1,4 +1,4 @@
-kind: FreeFlowPolicySequence
+ kind: FreeFlowPolicySequence
 apiVersion: api.ibm.com/v1
 metadata:
   name: air-temperature-api-sequence

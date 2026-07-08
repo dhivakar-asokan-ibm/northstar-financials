@@ -1,0 +1,15 @@
+kind: FreeFlowPolicySequence
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-sequence
+  namespace: singapore-air-temperature
+  version: '1'
+  tags:
+    - environment
+    - weather
+spec:
+  main:
+    - $ref: singapore-air-temperature:singapore-air-temperature-extract-identity:1
+    - $ref: singapore-air-temperature:singapore-air-temperature-authenticate:1
+    - $ref: singapore-air-temperature:Authorize-1gG7C:1.0
+    - $ref: singapore-air-temperature:singapore-air-temperature-invoke:1

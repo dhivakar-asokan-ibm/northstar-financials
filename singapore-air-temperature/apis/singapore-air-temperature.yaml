@@ -1,0 +1,17 @@
+kind: API
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature
+  version: '1'
+  namespace: singapore-air-temperature
+  tags:
+    - environment
+    - weather
+  description: Real-time air-temperature readings across Singapore, provided by the National Environment Agency (NEA).
+spec:
+  api-spec:
+    $path: ../spec/singapore-air-temperature-openapi.yaml
+  uriSchemes:
+    $ref: 'singapore-air-temperature:singapore-air-temperature-uri-schemes:1'
+  policy-sequence:
+    - $ref: 'singapore-air-temperature:singapore-air-temperature-sequence:1'
