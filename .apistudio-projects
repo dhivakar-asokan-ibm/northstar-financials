@@ -7,7 +7,13 @@
         "environment",
         "weather"
       ],
-      "lastUpdated": 1783435467671
+      "lastUpdated": 1783492729327
+    },
+    "air-temperature-mcp": {
+      "id": "RuCKpiMP",
+      "description": "MCP server for Singapore Air Temperature API",
+      "tags": [],
+      "lastUpdated": 1783448861561
     }
   }
 }

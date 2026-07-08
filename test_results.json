@@ -1,0 +1,4 @@
+{
+  "message": "The -en /--endpoint option is only available when asset names are specified.",
+  "detailedMessage": "Error: The -en /--endpoint option is only available when asset names are specified.\n    at validateEndpointWithNames (/Users/dhivakar/.nvm/versions/node/v24.14.0/lib/node_modules/@apistudio/apim-cli/dist/cli.cjs:445566:11)\n    at _Command.testAction (/Users/dhivakar/.nvm/versions/node/v24.14.0/lib/node_modules/@apistudio/apim-cli/dist/cli.cjs:445592:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+}

@@ -1,0 +1,62 @@
+kind: MCPTools
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-api-mcp-tool-k7m2p
+  namespace: air-temperature-mcp
+  version: '1'
+  tags: []
+  description: >
+    Real-time air-temperature readings across Singapore, provided by the
+    National Environment Agency (NEA).
+
+    Data collected from automated weather instruments at station level; updated
+    every ~5 minutes.
+spec:
+  tools:
+    - name: get_temperature
+      title: Get air temperature readings across Singapore
+      description: This tool retrieves real-time or historical air temperature data
+        from weather stations across Singapore. It provides temperature
+        observations useful for environmental monitoring and weather
+        forecasting. 1. Can retrieve data for specific stations using
+        station_id. 2. Can filter data by time range using start_time and
+        end_time. 3. Requires authentication headers X-IBM-Client-Id and
+        X-IBM-Client-Secret for access.
+      inputSchema:
+        type: object
+        properties:
+          station_id:
+            type: string
+            description: The identifier of the station to retrieve data from (e.g., "S101").
+              Only include if the user explicitly provides it.
+            example: S101
+            x-parameter-location: query
+          start_time:
+            type: string
+            format: date-time
+            description: The start time to filter readings in ISO 8601 format (e.g.,
+              "2025-11-11T00:00:00+08:00"). Only include if the user explicitly
+              provides it.
+            example: 2025-11-11T00:00:00+08:00
+            x-parameter-location: query
+          end_time:
+            type: string
+            format: date-time
+            description: The end time to filter readings in ISO 8601 format (e.g.,
+              "2025-11-11T12:00:00+08:00"). Only include if the user explicitly
+              provides it.
+            example: 2025-11-11T12:00:00+08:00
+            x-parameter-location: query
+          X-IBM-Client-Id:
+            type: string
+            description: The client ID for API authentication.
+            x-parameter-location: header
+          X-IBM-Client-Secret:
+            type: string
+            description: The client secret for API authentication.
+            x-parameter-location: header
+      x-api-binding:
+        operationPath: /air-temperature
+        operationMethod: GET
+        api:
+          $path: ./singapore-air-temperature-api-spec.yml
