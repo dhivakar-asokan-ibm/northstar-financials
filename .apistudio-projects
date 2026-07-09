@@ -1,28 +1,3 @@
 {
-  "projects": {
-    "air-temperature-demo": {
-      "id": "c8Qd1d0c",
-      "description": "Singapore Air Temperature API — NEA real-time weather data",
-      "tags": [
-        "environment",
-        "weather"
-      ],
-      "lastUpdated": 1783492729327
-    },
-    "air-temperature-mcp": {
-      "id": "RuCKpiMP",
-      "description": "MCP server for Singapore Air Temperature API",
-      "tags": [],
-      "lastUpdated": 1783448861561
-    },
-    "project-demo": {
-      "id": "G8c2hkmk",
-      "description": "Singapore Air Temperature API proxy",
-      "tags": [
-        "environment",
-        "weather"
-      ],
-      "lastUpdated": 1783506674583
-    }
-  }
+  "projects": {}
 }
