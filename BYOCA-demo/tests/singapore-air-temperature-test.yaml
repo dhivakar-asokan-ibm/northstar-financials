@@ -1,0 +1,73 @@
+kind: test
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-test
+  namespace: BYOCA-demo
+  version: '1.0'
+  tags:
+    - environment
+    - singapore
+spec:
+  api:
+    $endpoint: https://sample-api.eu-west-a.apiconnect.automation.ibm.com/environment
+  environment:
+    $ref: BYOCA-demo:singapore-air-temperature-environment:1.0
+  request:
+    # Test 1: Happy path — GET /air-temperature with valid credentials
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+        - key: X-IBM-Client-Id
+          value: ${client_id}
+        - key: X-IBM-Client-Secret
+          value: ${client_secret}
+      assertions:
+        - $ref: BYOCA-demo:200-air-temperature-response:1.0
+
+    # Test 2: GET /air-temperature filtered by station_id
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+        - key: X-IBM-Client-Id
+          value: ${client_id}
+        - key: X-IBM-Client-Secret
+          value: ${client_secret}
+      parameters:
+        - key: station_id
+          value: S101
+          type: query
+      assertions:
+        - $ref: BYOCA-demo:200-success:1.0
+
+    # Test 3: GET /air-temperature filtered by time range
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+        - key: X-IBM-Client-Id
+          value: ${client_id}
+        - key: X-IBM-Client-Secret
+          value: ${client_secret}
+      parameters:
+        - key: start_time
+          value: '2025-11-11T00:00:00+08:00'
+          type: query
+        - key: end_time
+          value: '2025-11-11T12:00:00+08:00'
+          type: query
+      assertions:
+        - $ref: BYOCA-demo:200-success:1.0
+
+    # Test 4: GET /air-temperature with missing credentials — expect 401
+    - method: GET
+      resource: /air-temperature
+      headers:
+        - key: accept
+          value: application/json
+      assertions:
+        - $ref: BYOCA-demo:401-unauthorized:1.0

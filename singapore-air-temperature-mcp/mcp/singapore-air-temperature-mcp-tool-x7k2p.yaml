@@ -3,9 +3,9 @@ apiVersion: api.ibm.com/v1
 metadata:
   name: singapore-air-temperature-mcp-tool-x7k2p
   namespace: singapore-air-temperature-mcp
-  version: '1'
+  version: 1
   tags: []
-  description: "Real-time air-temperature readings across Singapore, provided by the National Environment Agency (NEA). Data collected from automated weather instruments at station level; updated every ~5 minutes."
+  description: Real-time air-temperature readings across Singapore, provided by the National Environment Agency (NEA). Data collected from automated weather instruments at station level; updated every ~5 minutes.
 spec:
   tools:
     - name: get_air-temperature
@@ -41,7 +41,7 @@ spec:
             x-parameter-location: header
           X-IBM-Client-Secret:
             type: string
-            description: API secret for authentication
+            description: API key for authentication
             x-parameter-location: header
       x-api-binding:
         operationPath: /air-temperature

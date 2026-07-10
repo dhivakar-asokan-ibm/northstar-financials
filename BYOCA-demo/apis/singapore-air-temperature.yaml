@@ -1,0 +1,17 @@
+kind: API
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature
+  version: '1'
+  namespace: BYOCA-demo
+  description: Real-time air-temperature readings across Singapore, provided by the National Environment Agency (NEA).
+  tags:
+    - environment
+    - singapore
+spec:
+  api-spec:
+    $path: ../spec/singapore-air-temperature-openapi.yaml
+  uriSchemes:
+    $ref: BYOCA-demo:singapore-air-temperature-uri-schemes:1.0
+  policy-sequence:
+    - $ref: BYOCA-demo:singapore-air-temperature-sequence:1.0

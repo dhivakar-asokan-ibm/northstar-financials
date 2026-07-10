@@ -2,8 +2,8 @@ kind: assertion
 apiVersion: api.ibm.com/v1
 metadata:
   name: 200-success
-  namespace: demo
-  version: "1.0"
+  namespace: BYOCA-demo
+  version: '1.0'
   tags:
     - assertion
 spec:
@@ -11,8 +11,8 @@ spec:
     key: responseStatus
     value: 200
     action: equals
-    stopOnFail: false
-  - name: Validate content type
+    stopOnFail: true
+  - name: Validate content type is JSON
     key: responseHeaders.content-type
     value: application/json
     action: include

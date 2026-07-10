@@ -1,19 +1,22 @@
 {
   "projects": {
-    "Demo": {
-      "id": "11s5Ccwb",
+    "BYOCA-demo": {
+      "id": "FFY5onu6",
       "description": "",
-      "tags": [],
-      "lastUpdated": 1783689241430
+      "tags": [
+        "environment",
+        "singapore"
+      ],
+      "lastUpdated": 1783696291136
     },
     "singapore-air-temperature-mcp": {
-      "id": "nDhR2QiB",
+      "id": "lyV1Gk3h",
       "description": "MCP server for Singapore Air Temperature API",
       "tags": [
         "environment",
         "singapore"
       ],
-      "lastUpdated": 1783689904172
+      "lastUpdated": 1783697574154
     }
   }
 }

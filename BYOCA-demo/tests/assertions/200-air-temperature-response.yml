@@ -2,8 +2,8 @@ kind: assertion
 apiVersion: api.ibm.com/v1
 metadata:
   name: 200-air-temperature-response
-  namespace: demo
-  version: "1.0"
+  namespace: BYOCA-demo
+  version: '1.0'
   tags:
     - assertion
 spec:
@@ -11,18 +11,18 @@ spec:
     key: responseStatus
     value: 200
     action: equals
-    stopOnFail: false
-  - name: Validate content type
+    stopOnFail: true
+  - name: Validate content type is JSON
     key: responseHeaders.content-type
     value: application/json
     action: include
     stopOnFail: false
-  - name: Validate response has items array
+  - name: Validate response body has items array
     key: responseBody
     value: items
     action: haveProperty
     stopOnFail: false
-  - name: Validate response has api_info
+  - name: Validate response body has api_info
     key: responseBody
     value: api_info
     action: haveProperty
@@ -30,5 +30,10 @@ spec:
   - name: Validate api_info has status
     key: responseBody.api_info
     value: status
+    action: haveProperty
+    stopOnFail: false
+  - name: Validate api_info has version
+    key: responseBody.api_info
+    value: version
     action: haveProperty
     stopOnFail: false

@@ -2,11 +2,14 @@ kind: Telemetry
 apiVersion: api.ibm.com/v1
 metadata:
   name: singapore-air-temperature-telemetry
-  version: '1'
-  namespace: demo
+  version: '1.0'
+  namespace: BYOCA-demo
   tags:
     - environment
     - singapore
 spec:
   verbosity:
-    - level: normal
+    - level: detailed
+      onSuccessTrimTo: detailed
+      inboundLevel: detailed
+      outboundLevel: detailed

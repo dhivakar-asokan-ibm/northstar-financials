@@ -2,8 +2,8 @@ kind: assertion
 apiVersion: api.ibm.com/v1
 metadata:
   name: 401-unauthorized
-  namespace: demo
-  version: "1.0"
+  namespace: BYOCA-demo
+  version: '1.0'
   tags:
     - assertion
 spec:
@@ -11,4 +11,4 @@ spec:
     key: responseStatus
     value: 401
     action: equals
-    stopOnFail: false
+    stopOnFail: true

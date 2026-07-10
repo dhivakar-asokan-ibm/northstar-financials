@@ -2,10 +2,11 @@ kind: environment
 apiVersion: api.ibm.com/v1
 metadata:
   name: singapore-air-temperature-environment
-  namespace: demo
-  version: "1.0"
+  namespace: BYOCA-demo
+  version: '1.0'
   tags:
     - environment
+    - singapore
 spec:
   variables:
     - key: client_id
