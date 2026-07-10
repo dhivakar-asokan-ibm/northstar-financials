@@ -1,0 +1,12 @@
+kind: Authorize
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-authorize
+  version: '1'
+  namespace: demo
+  tags:
+    - environment
+    - singapore
+spec:
+  operation:
+    subscription: {}

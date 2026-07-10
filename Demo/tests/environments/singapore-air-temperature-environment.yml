@@ -1,0 +1,16 @@
+kind: environment
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-environment
+  namespace: demo
+  version: "1.0"
+  tags:
+    - environment
+spec:
+  variables:
+    - key: client_id
+      isSecret: true
+      value: $(client_id)
+    - key: client_secret
+      isSecret: true
+      value: $(client_secret)

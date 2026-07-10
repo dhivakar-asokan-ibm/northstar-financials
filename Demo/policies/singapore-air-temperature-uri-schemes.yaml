@@ -1,0 +1,12 @@
+kind: URISchemes
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-uri-schemes
+  version: '1'
+  namespace: demo
+  tags:
+    - environment
+    - singapore
+spec:
+  uriSchemes:
+    - https

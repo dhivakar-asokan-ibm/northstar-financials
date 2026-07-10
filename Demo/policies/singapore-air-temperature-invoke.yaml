@@ -1,0 +1,18 @@
+kind: Invoke
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-invoke
+  version: '1'
+  namespace: demo
+  tags:
+    - environment
+    - singapore
+spec:
+  endpoint:
+    http:
+      target:
+        url: '''https://sample-api.eu-west-a.apiconnect.automation.ibm.com/environment'' & $relativeUrl(''request'')'
+        urlType: jsonata
+        version: HTTP/1.1
+        timeout: 60
+        tlsClientProfile: tls-client-profile-default:1.0.0

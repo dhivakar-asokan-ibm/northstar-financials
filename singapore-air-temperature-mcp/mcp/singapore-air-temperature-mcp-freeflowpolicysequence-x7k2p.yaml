@@ -1,0 +1,15 @@
+kind: FreeFlowPolicySequence
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-mcp-freeflowpolicysequence-x7k2p
+  namespace: singapore-air-temperature-mcp
+  version: '1'
+  tags: []
+  labels:
+    gatewayTypes:
+      - nano
+spec:
+  monitoring:
+    $ref: singapore-air-temperature-mcp:telemetry-x7k2p:1
+  main:
+    - $ref: singapore-air-temperature-mcp:invoke-x7k2p:1

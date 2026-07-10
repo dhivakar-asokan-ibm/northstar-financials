@@ -1,0 +1,1168 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "WizardWorldApi",
+        "description": "A comprehensive REST API for exploring the magical world of Harry Potter. \nThis API provides access to information about elixirs, houses, ingredients, \nspells, and wizards from the wizarding world. Perfect for developers building \nHarry Potter themed applications, educational tools, or magical experiences.\n",
+        "contact": {
+            "name": "Github",
+            "url": "https://github.com/MossPiglets/WizardWorldAPI"
+        },
+        "version": "1.0.1"
+    },
+    "paths": {
+        "/Elixirs": {
+            "get": {
+                "tags": [
+                    "Elixirs"
+                ],
+                "summary": "Get all elixirs",
+                "description": "Retrieve a list of magical elixirs from the wizarding world. You can filter \nthe results by various criteria such as name, difficulty level, specific \ningredients, inventor, or manufacturer. This endpoint returns comprehensive \ninformation about each elixir including effects, side effects, brewing time, \nand required ingredients.\n",
+                "operationId": "getElixirs",
+                "parameters": [
+                    {
+                        "name": "Name",
+                        "in": "query",
+                        "description": "Filter elixirs by name (partial match supported)",
+                        "example": "Polyjuice",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Difficulty",
+                        "in": "query",
+                        "description": "Filter elixirs by brewing difficulty level",
+                        "example": "Advanced",
+                        "schema": {
+                            "$ref": "#/components/schemas/ElixirDifficulty"
+                        }
+                    },
+                    {
+                        "name": "Ingredient",
+                        "in": "query",
+                        "description": "Filter elixirs that contain a specific ingredient",
+                        "example": "Lacewing flies",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "InventorFullName",
+                        "in": "query",
+                        "description": "Filter elixirs by the full name of their inventor",
+                        "example": "Severus Snape",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Manufacturer",
+                        "in": "query",
+                        "description": "Filter elixirs by their manufacturer or producer",
+                        "example": "Slug & Jiggers Apothecary",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of elixirs",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ElixirDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ElixirDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ElixirDto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request - invalid query parameters"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Elixirs/{id}": {
+            "get": {
+                "tags": [
+                    "Elixirs"
+                ],
+                "summary": "Get elixir by ID",
+                "description": "Retrieve detailed information about a specific elixir using its unique identifier. \nThis endpoint returns comprehensive data including the elixir's effects, side effects, \nbrewing characteristics, required time, difficulty level, ingredients list, \ninventors, and manufacturer information.\n",
+                "operationId": "getElixirById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Unique identifier (UUID) of the elixir",
+                        "example": "6ba0c5c6-7f8a-4e0e-8b9a-1f2a3b4c5d6e",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved elixir details",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ElixirDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ElixirDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ElixirDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid UUID format"
+                    },
+                    "404": {
+                        "description": "Elixir not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Feedback": {
+            "post": {
+                "tags": [
+                    "Feedback"
+                ],
+                "summary": "Submit user feedback",
+                "description": "Submit feedback about the API, report bugs, suggest data corrections, or provide \ngeneral suggestions for improvement. This endpoint helps maintain the quality and \naccuracy of the wizarding world data by allowing users to report issues or \ncontribute suggestions.\n",
+                "operationId": "submitFeedback",
+                "requestBody": {
+                    "description": "Feedback submission details",
+                    "required": true,
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendFeedbackCommand"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendFeedbackCommand"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendFeedbackCommand"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendFeedbackCommand"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Feedback successfully submitted",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid feedback data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Houses": {
+            "get": {
+                "tags": [
+                    "Houses"
+                ],
+                "summary": "Get all Hogwarts houses",
+                "description": "Retrieve information about all four Hogwarts houses: Gryffindor, Hufflepuff, \nRavenclaw, and Slytherin. This endpoint returns detailed information about each \nhouse including their colors, founders, mascot animals, associated elements, \nhouse ghosts, common room locations, heads of house, and characteristic traits.\n",
+                "operationId": "getHouses",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query parameters for filtering houses (currently unused but reserved for future functionality)",
+                        "schema": {
+                            "$ref": "#/components/schemas/GetHousesQuery"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of Hogwarts houses",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/HouseDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/HouseDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/HouseDto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Houses/{id}": {
+            "get": {
+                "tags": [
+                    "Houses"
+                ],
+                "summary": "Get house by ID",
+                "description": "Retrieve detailed information about a specific Hogwarts house using its unique \nidentifier. This returns comprehensive data about the house including its history, \ncharacteristics, notable members, and associated magical properties.\n",
+                "operationId": "getHouseById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Unique identifier (UUID) of the Hogwarts house",
+                        "example": "805fd37a-65ae-4fe5-b336-d767b8b7c0a4",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved house details",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HouseDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HouseDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HouseDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid UUID format"
+                    },
+                    "404": {
+                        "description": "House not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Ingredients": {
+            "get": {
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Get all magical ingredients",
+                "description": "Retrieve a list of magical ingredients used in potion brewing and spell casting. \nThese ingredients range from common herbs and minerals to rare magical creature \nparts and enchanted substances. You can filter results by ingredient name to \nfind specific components for your magical recipes.\n",
+                "operationId": "getIngredients",
+                "parameters": [
+                    {
+                        "name": "Name",
+                        "in": "query",
+                        "description": "Filter ingredients by name (partial match supported)",
+                        "example": "Unicorn horn",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of magical ingredients",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/IngredientDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/IngredientDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/IngredientDto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Ingredients/{id}": {
+            "get": {
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Get ingredient by ID",
+                "description": "Retrieve detailed information about a specific magical ingredient using its unique \nidentifier. This provides comprehensive data about the ingredient's properties, \nuses, and magical applications in potion brewing and spell casting.\n",
+                "operationId": "getIngredientById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Unique identifier (UUID) of the magical ingredient",
+                        "example": "1f2a3b4c-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved ingredient details",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IngredientDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IngredientDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IngredientDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid UUID format"
+                    },
+                    "404": {
+                        "description": "Ingredient not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Spells": {
+            "get": {
+                "tags": [
+                    "Spells"
+                ],
+                "summary": "Get all spells",
+                "description": "Retrieve a comprehensive list of spells from the wizarding world. This includes \ncharms, curses, hexes, jinxes, transfiguration spells, and more. You can filter \nspells by name, type, or incantation to find specific magical effects or spells \nfor particular purposes.\n",
+                "operationId": "getSpells",
+                "parameters": [
+                    {
+                        "name": "Name",
+                        "in": "query",
+                        "description": "Filter spells by name (partial match supported)",
+                        "example": "Expelliarmus",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Type",
+                        "in": "query",
+                        "description": "Filter spells by their magical type or category",
+                        "example": "Charm",
+                        "schema": {
+                            "$ref": "#/components/schemas/SpellType"
+                        }
+                    },
+                    {
+                        "name": "Incantation",
+                        "in": "query",
+                        "description": "Filter spells by their spoken incantation",
+                        "example": "Expecto Patronum",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of spells",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpellDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpellDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SpellDto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Spells/{id}": {
+            "get": {
+                "tags": [
+                    "Spells"
+                ],
+                "summary": "Get spell by ID",
+                "description": "Retrieve detailed information about a specific spell using its unique identifier. \nThis returns comprehensive data about the spell including its incantation, effects, \nwhether it can be cast verbally, spell type, light color produced, and creator \ninformation.\n",
+                "operationId": "getSpellById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Unique identifier (UUID) of the spell",
+                        "example": "7f8a9b0c-1d2e-3f4a-5b6c-7d8e9f0a1b2c",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved spell details",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpellDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpellDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SpellDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid UUID format"
+                    },
+                    "404": {
+                        "description": "Spell not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Wizards": {
+            "get": {
+                "tags": [
+                    "Wizards"
+                ],
+                "summary": "Get all wizards",
+                "description": "Retrieve a list of wizards and witches from the magical world. This includes \nfamous characters, historical figures, and notable magical practitioners. \nYou can filter results by first name, last name, or both to find specific \nmagical individuals and learn about their contributions to the wizarding world.\n",
+                "operationId": "getWizards",
+                "parameters": [
+                    {
+                        "name": "FirstName",
+                        "in": "query",
+                        "description": "Filter wizards by first name (partial match supported)",
+                        "example": "Harry",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "LastName",
+                        "in": "query",
+                        "description": "Filter wizards by last name (partial match supported)",
+                        "example": "Potter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of wizards",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WizardDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WizardDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WizardDto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/Wizards/{id}": {
+            "get": {
+                "tags": [
+                    "Wizards"
+                ],
+                "summary": "Get wizard by ID",
+                "description": "Retrieve detailed information about a specific wizard or witch using their unique \nidentifier. This returns comprehensive data about the magical person including \ntheir biographical information and any elixirs they have invented or contributed to.\n",
+                "operationId": "getWizardById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Unique identifier (UUID) of the wizard or witch",
+                        "example": "3f4a5b6c-7d8e-9f0a-1b2c-3d4e5f6a7b8c",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved wizard details",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WizardDto"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WizardDto"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WizardDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid UUID format"
+                    },
+                    "404": {
+                        "description": "Wizard not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ElixirDifficulty": {
+                "type": "string",
+                "description": "The difficulty level required to brew an elixir, ranging from beginner-friendly to one-of-a-kind masterpieces",
+                "enum": [
+                    "Unknown",
+                    "Advanced",
+                    "Moderate",
+                    "Beginner",
+                    "OrdinaryWizardingLevel",
+                    "OneOfAKind"
+                ],
+                "example": "Advanced"
+            },
+            "ElixirDto": {
+                "type": "object",
+                "description": "Comprehensive information about a magical elixir including its properties, effects, and brewing requirements",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the elixir",
+                        "example": "6ba0c5c6-7f8a-4e0e-8b9a-1f2a3b4c5d6e"
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The common name of the elixir",
+                        "example": "Polyjuice Potion"
+                    },
+                    "effect": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The primary magical effect or purpose of the elixir",
+                        "example": "Allows the drinker to assume the appearance of another person"
+                    },
+                    "sideEffects": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Any known adverse effects or risks associated with the elixir",
+                        "example": "May cause nausea, temporary hair color changes, or complications if animal hair is used"
+                    },
+                    "characteristics": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Physical characteristics of the elixir such as color, texture, smell, or taste",
+                        "example": "Thick, mudlike consistency with bubbling surface; tastes revolting"
+                    },
+                    "time": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Time required to brew the elixir",
+                        "example": "One month (minimum brewing time)"
+                    },
+                    "difficulty": {
+                        "$ref": "#/components/schemas/ElixirDifficulty"
+                    },
+                    "ingredients": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/IngredientDto"
+                        },
+                        "nullable": true,
+                        "description": "List of magical ingredients required to brew this elixir"
+                    },
+                    "inventors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ElixirInventorDto"
+                        },
+                        "nullable": true,
+                        "description": "Wizards or witches who invented or significantly contributed to this elixir's development"
+                    },
+                    "manufacturer": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Commercial producer or traditional source of this elixir",
+                        "example": "Slug & Jiggers Apothecary"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ElixirInventorDto": {
+                "type": "object",
+                "description": "Information about a wizard or witch who invented or contributed to an elixir's development",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the inventor",
+                        "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "First name of the elixir inventor",
+                        "example": "Severus"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Last name of the elixir inventor",
+                        "example": "Snape"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "FeedbackType": {
+                "type": "string",
+                "description": "Categories of feedback that users can submit to help improve the API and data quality",
+                "enum": [
+                    "General",
+                    "Bug",
+                    "DataError",
+                    "Suggestion"
+                ],
+                "example": "DataError"
+            },
+            "GetHousesQuery": {
+                "type": "object",
+                "description": "Query parameters for filtering Hogwarts houses (reserved for future filtering capabilities)",
+                "additionalProperties": false
+            },
+            "HouseDto": {
+                "type": "object",
+                "description": "Comprehensive information about a Hogwarts house including its history, characteristics, and notable members",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the house",
+                        "example": "805fd37a-65ae-4fe5-b336-d767b8b7c0a4"
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Name of the Hogwarts house",
+                        "example": "Gryffindor"
+                    },
+                    "houseColours": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Official colors associated with the house",
+                        "example": "Scarlet and gold"
+                    },
+                    "founder": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Name of the wizard or witch who founded this house",
+                        "example": "Godric Gryffindor"
+                    },
+                    "animal": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Mascot animal that represents the house",
+                        "example": "Lion"
+                    },
+                    "element": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Classical element associated with the house",
+                        "example": "Fire"
+                    },
+                    "ghost": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "House ghost that resides in Hogwarts",
+                        "example": "Nearly Headless Nick"
+                    },
+                    "commonRoom": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Location of the house's common room within Hogwarts castle",
+                        "example": "Gryffindor Tower"
+                    },
+                    "heads": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/HouseHeadDto"
+                        },
+                        "nullable": true,
+                        "description": "Current and former heads of house (professors responsible for the house)"
+                    },
+                    "traits": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TraitDto"
+                        },
+                        "nullable": true,
+                        "description": "Character traits and values associated with house members"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "HouseHeadDto": {
+                "type": "object",
+                "description": "Information about a professor who serves or served as head of a Hogwarts house",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the house head",
+                        "example": "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "First name of the house head",
+                        "example": "Minerva"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Last name of the house head",
+                        "example": "McGonagall"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "IngredientDto": {
+                "type": "object",
+                "description": "Information about a magical ingredient used in potion brewing and spell casting",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the ingredient",
+                        "example": "1f2a3b4c-5d6e-7f8a-9b0c-1d2e3f4a5b6c"
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Name of the magical ingredient",
+                        "example": "Unicorn horn (powdered)"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SendFeedbackCommand": {
+                "type": "object",
+                "description": "Structure for submitting user feedback about the API or its data",
+                "properties": {
+                    "feedbackType": {
+                        "$ref": "#/components/schemas/FeedbackType"
+                    },
+                    "feedback": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Detailed feedback message from the user",
+                        "example": "The Polyjuice Potion brewing time seems incorrect based on the books"
+                    },
+                    "entityId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true,
+                        "description": "ID of the specific entity (elixir, spell, etc.) the feedback relates to, if applicable",
+                        "example": "6ba0c5c6-7f8a-4e0e-8b9a-1f2a3b4c5d6e"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SpellDto": {
+                "type": "object",
+                "description": "Comprehensive information about a magical spell including its casting requirements and effects",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the spell",
+                        "example": "7f8a9b0c-1d2e-3f4a-5b6c-7d8e9f0a1b2c"
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Common name of the spell",
+                        "example": "Disarming Charm"
+                    },
+                    "incantation": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Spoken words required to cast the spell",
+                        "example": "Expelliarmus"
+                    },
+                    "effect": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Primary magical effect produced by the spell",
+                        "example": "Forces an opponent to release whatever they are holding"
+                    },
+                    "canBeVerbal": {
+                        "type": "boolean",
+                        "nullable": true,
+                        "description": "Whether the spell can be cast with spoken incantation (true) or requires non-verbal casting (false)",
+                        "example": true
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/SpellType"
+                    },
+                    "light": {
+                        "$ref": "#/components/schemas/SpellLight"
+                    },
+                    "creator": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Name of the wizard or witch who created or invented the spell",
+                        "example": "Unknown"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SpellLight": {
+                "type": "string",
+                "description": "Color and characteristics of light produced when the spell is cast",
+                "enum": [
+                    "None",
+                    "Blue",
+                    "IcyBlue",
+                    "Red",
+                    "Gold",
+                    "Purple",
+                    "Transparent",
+                    "White",
+                    "Green",
+                    "Orange",
+                    "Yellow",
+                    "BrightBlue",
+                    "Pink",
+                    "Violet",
+                    "BlueishWhite",
+                    "Silver",
+                    "Scarlet",
+                    "Fire",
+                    "FieryScarlet",
+                    "Grey",
+                    "DarkRed",
+                    "Turquoise",
+                    "PsychedelicTransparentWave",
+                    "BrightYellow",
+                    "BlackSmoke"
+                ],
+                "example": "Red"
+            },
+            "SpellType": {
+                "type": "string",
+                "description": "Classification of the spell based on its magical properties and intended use",
+                "enum": [
+                    "None",
+                    "Charm",
+                    "Conjuration",
+                    "Spell",
+                    "Transfiguration",
+                    "HealingSpell",
+                    "DarkCharm",
+                    "Jinx",
+                    "Curse",
+                    "MagicalTransportation",
+                    "Hex",
+                    "CounterSpell",
+                    "DarkArts",
+                    "CounterJinx",
+                    "CounterCharm",
+                    "Untransfiguration",
+                    "BindingMagicalContract",
+                    "Vanishment"
+                ],
+                "example": "Charm"
+            },
+            "TraitDto": {
+                "type": "object",
+                "description": "Character trait or value associated with a Hogwarts house",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the trait",
+                        "example": "c3d4e5f6-a7b8-9012-cdef-345678901234"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/TraitName"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "TraitName": {
+                "type": "string",
+                "description": "Specific character traits and values that define the members of each Hogwarts house",
+                "enum": [
+                    "None",
+                    "Courage",
+                    "Bravery",
+                    "Determination",
+                    "Daring",
+                    "Nerve",
+                    "Chivalary",
+                    "Hardworking",
+                    "Patience",
+                    "Fairness",
+                    "Just",
+                    "Loyalty",
+                    "Modesty",
+                    "Wit",
+                    "Learning",
+                    "Wisdom",
+                    "Acceptance",
+                    "Inteligence",
+                    "Creativity",
+                    "Resourcefulness",
+                    "Pride",
+                    "Cunning",
+                    "Ambition",
+                    "Selfpreservation"
+                ],
+                "example": "Courage"
+            },
+            "Unit": {
+                "type": "object",
+                "description": "Empty response type indicating successful completion of an operation",
+                "additionalProperties": false
+            },
+            "WizardDto": {
+                "type": "object",
+                "description": "Information about a wizard or witch from the magical world",
+                "properties": {
+                    "elixirs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WizardElixirDto"
+                        },
+                        "nullable": true,
+                        "description": "List of elixirs that this wizard has invented or contributed to"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the wizard",
+                        "example": "3f4a5b6c-7d8e-9f0a-1b2c-3d4e5f6a7b8c"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "First name of the wizard or witch",
+                        "example": "Harry"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Last name of the wizard or witch",
+                        "example": "Potter"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "WizardElixirDto": {
+                "type": "object",
+                "description": "Reference to an elixir associated with a specific wizard (simplified version for wizard profiles)",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique identifier for the elixir",
+                        "example": "6ba0c5c6-7f8a-4e0e-8b9a-1f2a3b4c5d6e"
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Name of the elixir",
+                        "example": "Felix Felicis"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://wizard-world-api.herokuapp.com",
+            "description": "server"
+        }
+    ]
+}

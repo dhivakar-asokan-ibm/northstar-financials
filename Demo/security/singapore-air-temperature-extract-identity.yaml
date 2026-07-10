@@ -1,0 +1,18 @@
+kind: ExtractIdentity
+apiVersion: api.ibm.com/v1
+metadata:
+  name: singapore-air-temperature-extract-identity
+  version: '1'
+  namespace: demo
+  tags:
+    - environment
+    - singapore
+spec:
+  credentialType:
+    apiKey:
+      clientId:
+        httpHeader:
+          name: X-IBM-Client-Id
+      clientSecret:
+        httpHeader:
+          name: X-IBM-Client-Secret

@@ -1,3 +1,19 @@
 {
-  "projects": {}
+  "projects": {
+    "Demo": {
+      "id": "11s5Ccwb",
+      "description": "",
+      "tags": [],
+      "lastUpdated": 1783689241430
+    },
+    "singapore-air-temperature-mcp": {
+      "id": "nDhR2QiB",
+      "description": "MCP server for Singapore Air Temperature API",
+      "tags": [
+        "environment",
+        "singapore"
+      ],
+      "lastUpdated": 1783689904172
+    }
+  }
 }
